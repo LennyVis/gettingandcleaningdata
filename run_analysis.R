@@ -80,5 +80,5 @@ result_dt=dcast(melt_dt, subject+ activity.desc~variable, mean)
 
 #Printing the dataset to a csv file
 
-write.csv(new_dt1, file="course_project_result.csv", row.names=FALSE)
+write.csv(result_dt, file="course_project_result.csv", row.names=FALSE)
 
