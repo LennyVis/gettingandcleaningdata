@@ -46,9 +46,9 @@ combined_dataset=rbind(full_train, full_test)
 
 activity_labels=read.table("UCI HAR Dataset/activity_labels.txt",stringsAsFactors=FALSE)
 
-names(activity_labels)=c("activity.num", "activity.desc")
+names(activity_labels)=c("activitynum", "activitydesc")
 
-combined_dataset=join(combined_dataset, activity_labels, by="activity.num", type="left", match="all")
+combined_dataset=join(combined_dataset, activity_labels, by="activitynum", type="left", match="all")
 
 
 #Setting more descriptive variable names of the dataset by using the "features.txt"
@@ -59,12 +59,12 @@ var_names$V2=tolower(var_names$V2)
 
 var_names$V2=gsub("[(),-]","",var_names$V2,)
 
-names(combined_dataset)=c(var_names$V2, "subject", "activity.num", "activity.desc")
+names(combined_dataset)=c(var_names$V2, "subject", "activitynum", "activitydesc")
 
 
 #Extracts the column id of all columns that are representing mean and standard deviation values
 
-col_ls=grep("mean|std|subject|activity.num|activity.desc", names(combined_dataset), value=FALSE)
+col_ls=grep("mean|std|subject|activitynum|activitydesc", names(combined_dataset), value=FALSE)
 
 combined_dataset_truncated=combined_dataset[,col_ls]
 
@@ -73,9 +73,9 @@ combined_dataset_truncated=combined_dataset[,col_ls]
 
 measurement_var_ls=names(combined_dataset_truncated[,c(1:86)])
 
-melt_dt=melt(combined_dataset_truncated, id=c("subject", "activity.desc"), measure.vars= measurement_var_ls)
+melt_dt=melt(combined_dataset_truncated, id=c("subject", "activitydesc"), measure.vars= measurement_var_ls)
 
-result_dt=dcast(melt_dt, subject+ activity.desc~variable, mean)
+result_dt=dcast(melt_dt, subject+ activitydesc~variable, mean)
 
 
 #Printing the dataset to a csv file
